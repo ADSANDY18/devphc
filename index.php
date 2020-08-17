@@ -53,6 +53,9 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
     <button class="w3-button w3-light-grey w3-padding-large w3-margin-top">
       <img src="https://img.icons8.com/flat_round/30/000000/microphone.png"/>&nbsp;&nbsp;Say Hi! to your Plant
     </button>
+    <a href="fetch-data.html"><button  class="w3-button w3-light-grey w3-padding-large w3-margin-top">
+      <img src="https://img.icons8.com/flat_round/30/000000/microphone.png"/>&nbsp;&nbsp;Check Your Plant Health
+    </button></a>
   </header>
 
   <!-- Portfolio Section -->
