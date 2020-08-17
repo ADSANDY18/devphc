@@ -157,6 +157,12 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
   var x = window.value;
   console.log('the status data' +x);
   var diff = x-data;
+   if(diff!==diff)
+  {
+    document.getElementById("nonconn").style.display="block";
+    document.getElementById("conn").style.display="none";
+  }
+   
   console.log(diff);
   if(diff==0 || diff=='')
   {
