@@ -45,8 +45,23 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 
   <!-- Header -->
   <header class="w3-container w3-center" style="padding:128px 16px" id="home">
-     <img src="wifi.gif" style="width: 100px;height: 80px">
+
+     <div id="conn">
+     <img src="wifi.gif" style="width: 100px;height: 80px;">
+    <h2 ><img src="https://img.icons8.com/color/48/000000/usb-connected.png"/>You Plant is now Online!</h2>
+   </div>
+
+     <h2  id="nonconn"><img src="https://img.icons8.com/fluent/48/000000/usb-disconnected.png"/>Your Plant is offline!</h2>
+    <style type="text/css">
+      #nonconn
+      {
+      display: none;
+      }
+    </style>
+   
+     
     <h1 class="w3-jumbo"><b>DevPHC Data</b></h1>
+
     <p>Developing Plant Human Communication Interface Data</p>
     <img src="plant-front.png" class="w3-image w3-hide-large w3-hide-small w3-round" style="display:block;width:60%;margin:auto;">
     <br>
@@ -98,6 +113,17 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
   // Initialize Firebase
   firebase.initializeApp(firebaseConfig);
 
+ setInterval(status,15000);
+ function status()
+ {
+  firebase.database().ref('RandomVal').once('value').then(function(snapshot) {
+   window.value = snapshot.val().Value;
+ }) 
+ }
+
+
+
+
  setInterval(plantdata,700);
  function plantdata()
  {
@@ -108,6 +134,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
  console.log(plant);
  console.log(data);
  document.getElementById("data").innerHTML=data;
+
 
  if(data<500)
  {
@@ -126,33 +153,38 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
   document.getElementById('count').style.backgroundColor="green";
  }
 
- console.log(perc);
+  console.log(perc);
+  var x = window.value;
+  console.log('the status data' +x);
+  var diff = x-data;
+  console.log(diff);
+  if(diff==0 || diff=='')
+  {
+    document.getElementById("nonconn").style.display="block";
+    document.getElementById("conn").style.display="none";
+   
+  }
+  if(diff>0 || diff<0)
+  {
+    
+    document.getElementById("conn").style.display="block";
+    document.getElementById("nonconn").style.display="none";
+    
+  }
+
  
+
+
 
 })
 
+
+
  }
 
+
+
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
