@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<title>W3.CSS Template</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
+.w3-row-padding img {margin-bottom: 12px}
+.bgimg {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image: url('datapic.png');
+  min-height: 100%;
+}
+</style>
+<body>
+
+<!-- Sidebar with image -->
+<nav class="w3-sidebar w3-hide-medium w3-hide-small" style="width:40%">
+  <div class="bgimg"></div>
+</nav>
+
+<!-- Hidden Sidebar (reveals when clicked on menu icon)-->
+<nav class="w3-sidebar w3-black w3-animate-right w3-xxlarge" style="display:none;padding-top:150px;right:0;z-index:2" id="mySidebar">
+  <a href="javascript:void(0)" onclick="closeNav()" class="w3-button w3-black w3-xxxlarge w3-display-topright" style="padding:0 12px;">
+    <i class="fa fa-remove"></i>
+  </a>
+  <div class="w3-bar-block w3-center">
+    <a href="#" class="w3-bar-item w3-button w3-text-grey w3-hover-black" onclick="closeNav()">Home</a>
+    <a href="#portfolio" class="w3-bar-item w3-button w3-text-grey w3-hover-black" onclick="closeNav()">Portfolio</a>
+    <a href="#about" class="w3-bar-item w3-button w3-text-grey w3-hover-black" onclick="closeNav()">About</a>
+    <a href="#contact" class="w3-bar-item w3-button w3-text-grey w3-hover-black" onclick="closeNav()">Contact</a>
+  </div>
+</nav>
+
+<!-- Page Content -->
+<div class="w3-main w3-padding-large" style="margin-left:40%">
+
+  <!-- Menu icon to open sidebar -->
+  <span class="w3-button w3-top w3-white w3-xxlarge w3-text-grey w3-hover-text-black" style="width:auto;right:0;" onclick="openNav()"><i class="fa fa-bars"></i></span>
+
+  <!-- Header -->
+  <header class="w3-container w3-center" style="padding:128px 16px" id="home">
+     <img src="wifi.gif" style="width: 100px;height: 80px">
+    <h1 class="w3-jumbo"><b>DevPHC Data</b></h1>
+    <p>Developing Plant Human Communication Interface Data</p>
+    <img src="plant-front.png" class="w3-image w3-hide-large w3-hide-small w3-round" style="display:block;width:60%;margin:auto;">
+    <br>
+    <br>
+    <p>Data From ESP8266</p>
+    <h3>Sensor Value:&nbsp;&nbsp;<span id="data"></span>/1000</h3>
+    <div class="w3-grey">
+      <div class="w3-container w3-center w3-padding" id="count" style="color: white">calculating..</div>
+    </div>
+  </header>
+
+  <!-- Portfolio Section -->
+  <div class="w3-padding-32 w3-content" id="portfolio">
+    <h2 class="w3-text-grey">Project Under |<img  src="https://i.postimg.cc/BnHsmjgp/Jerrybit-logo.png" style="width: 150px;height: 150px"></h2>
+    <hr class="w3-opacity">
+
+    
+  <!-- End Portfolio Section -->
+  </div>
+
+
+  
+<!-- END PAGE CONTENT -->
+</div>
+
+<!--------------------------------data from esp8266------------------------------->
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-database.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyCd1AJC89KRgQJB5nUioTBziC9XRfLWnSs",
+    authDomain: "chatbot-d3b0f.firebaseapp.com",
+    databaseURL: "https://chatbot-d3b0f.firebaseio.com",
+    projectId: "chatbot-d3b0f",
+    storageBucket: "chatbot-d3b0f.appspot.com",
+    messagingSenderId: "1023271831499",
+    appId: "1:1023271831499:web:c80648d31cae7bb288984e",
+    measurementId: "G-W9KF3G51YW"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+ setInterval(plantdata,700);
+ function plantdata()
+ {
+
+ firebase.database().ref('RandomVal').once('value').then(function(snapshot) {
+ var data = snapshot.val().Value;
+ var plant = snapshot.val().Plant_Name;
+ console.log(plant);
+ console.log(data);
+ document.getElementById("data").innerHTML=data;
+
+ if(data<500)
+ {
+  document.getElementById('data').style.color="red";
+ }
+
+ var perc = Math.ceil((data/1000)*100);
+ document.getElementById('count').style.width=perc+"%";
+ document.getElementById('count').innerHTML=perc+"%";
+ if(perc<50)
+ {
+  document.getElementById('count').style.backgroundColor="red";
+ }
+ else
+ {
+  document.getElementById('count').style.backgroundColor="green";
+ }
+
+ console.log(perc);
+ 
+
+})
+
+ }
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+// Open and close sidebar
+function openNav() {
+  document.getElementById("mySidebar").style.width = "60%";
+  document.getElementById("mySidebar").style.display = "block";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.display = "none";
+}
+</script>
+
+</body>
+</html>
